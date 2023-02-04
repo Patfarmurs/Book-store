@@ -4,7 +4,7 @@ import Form from '../components/Form';
 
 const Books = () => (
   <>
-    <Book title="Dracula" author="Arthur Conan Doyle" />
+    <Book title="The prince" author="Nicolo Makiavely" />
     <Form />
   </>
 );
