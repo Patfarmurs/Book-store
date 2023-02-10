@@ -166,6 +166,6 @@ If you like this project...
 
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](https://github.com/Patfarmurs/Book-store/blob/develop/License) licensed.
+This project is [MIT](https://github.com/Patfarmurs/Book-store/blob/redux-components/MIT.md) licensed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
