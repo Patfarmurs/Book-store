@@ -65,7 +65,7 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://yourdeployedapplicationlink.com)
+- Coming soon
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -85,7 +85,7 @@ Clone this repository to your desired folder:
 
 ```sh
   git clone https://github.com/Patfarmurs/Book-store
-  cd book-store
+  cd Book-store
 ```
 
 ### Install
@@ -166,6 +166,6 @@ If you like this project...
 
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](./LICENSE) licensed.
+This project is [MIT](https://github.com/Patfarmurs/Book-store/blob/redux-components/MIT.md) licensed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

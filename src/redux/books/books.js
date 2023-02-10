@@ -14,31 +14,30 @@ const removeBook = (id) => ({
   id,
 });
 
-// Reducer
 const bookReducer = (state = [
   {
     id: v4(),
     title: 'The Pearl of a great price',
     author: 'Joseph Smith',
-    genre: 'Gospel',
+    category: 'Gospel',
   },
   {
     id: v4(),
     title: 'The Prince',
     author: 'Nicolo Makiaveli',
-    genre: 'philosophy',
+    category: 'philosophy',
   },
   {
     id: v4(),
     title: 'Price of my karma',
     author: 'Patrick Mukul',
-    genre: 'philosophy',
+    category: 'philosophy',
   },
   {
     id: v4(),
     title: 'Metaphore',
     author: 'Pitagore',
-    genre: 'historical',
+    category: 'historical',
   },
 ], action = {}) => {
   switch (action.type) {
