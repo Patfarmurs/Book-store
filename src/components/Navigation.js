@@ -3,10 +3,18 @@ import { Link } from 'react-router-dom';
 
 const Navigation = () => (
   <nav>
-    <Link to="/">Home</Link>
-    <Link to="/categories">
-      Categories
-    </Link>
+    <div>
+      <h1>Bookstore CMS</h1>
+      <ul>
+        <li>
+          <Link to="/">BOOKS</Link>
+        </li>
+        <li>
+          <Link to="categories">CATEGORIES</Link>
+        </li>
+      </ul>
+    </div>
+    <p>profile icon</p>
   </nav>
 );
 

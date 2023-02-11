@@ -1,46 +1,61 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
-const API_BASE_URL = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/4pGjQSSoy74e8PYohZSS/books/';
+const FETCHED_BOOK = 'bookstore/books/FETCHED_BOOK';
+const ADDED_BOOK = 'bookstore/books/ADDED_BOOK';
+const REMOVED_BOOK = 'bookstore/books/REMOVED_BOOK';
 
-const axiosInstance = axios.create({
-  baseURL: API_BASE_URL,
-});
+const baseUrl = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps';
+const appId = 'coi5KbwSmZBfENXVGL0y';
+const appResourceUrl = `${baseUrl}/${appId}/books`;
 
-const FETCH_BOOKS = 'FETCH_BOOKS';
-const ADD_BOOK = 'ADD_BOOK';
-const REMOVE_BOOK = 'REMOVE_BOOK';
+const initialState = [];
 
-const bookReducer = (state = [], action) => {
-  switch (action.type) {
-    case `${FETCH_BOOKS}/fulfilled`:
-      return action.payload;
-    case `${ADD_BOOK}/fulfilled`:
-      return [...state, action.payload];
-    case `${REMOVE_BOOK}/fulfilled`:
-      return state.filter((book) => book.id.toString() !== action.payload.toString());
-    default:
-      return state;
+const fetchBooks = createAsyncThunk(
+  FETCHED_BOOK,
+  async (post, { dispatch }) => {
+    const response = await fetch(appResourceUrl);
+    const jsonData = await response.json();
+    const books = Object.keys(jsonData).map((id) => ({
+      ...jsonData[id][0],
+      item_id: id,
+    }));
+    dispatch({
+      type: FETCHED_BOOK,
+      payload: books,
+    });
+  },
+);
+
+const addBook = createAsyncThunk(
+  ADDED_BOOK,
+  async (book, { dispatch }) => {
+    await fetch(appResourceUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(book),
+    });
+    dispatch({ type: ADDED_BOOK, payload: book });
+  },
+);
+
+const deleteBook = createAsyncThunk(
+  REMOVED_BOOK,
+  async (id, { dispatch }) => {
+    await fetch(`${appResourceUrl}/${id}`, { method: 'DELETE' });
+    dispatch({ type: REMOVED_BOOK, payload: id });
+  },
+);
+
+const booksReducer = (state = initialState, action) => {
+  if (action.type === FETCHED_BOOK) {
+    return action.payload;
+  } if (action.type === ADDED_BOOK) {
+    return [...state, action.payload];
+  } if (action.type === REMOVED_BOOK) {
+    return state.filter((book) => book.item_id !== action.payload);
   }
+  return state;
 };
 
-export default bookReducer;
-
-export const loadBooksAction = createAsyncThunk(FETCH_BOOKS, async () => {
-  const response = await axiosInstance.get('books');
-  const books = Object.keys(response.data).map((id) => ({
-    id,
-    ...response.data[id][0],
-  }));
-  return books;
-});
-
-export const addBookAction = createAsyncThunk(ADD_BOOK, async (book) => {
-  await axiosInstance.post('books', book);
-  return book;
-});
-
-export const removeBookAction = createAsyncThunk(REMOVE_BOOK, async (id) => {
-  await axiosInstance.delete(`books/${id}`);
-  return id;
-});
+export { fetchBooks, addBook, deleteBook };
+export default booksReducer;
