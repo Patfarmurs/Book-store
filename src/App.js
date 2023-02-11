@@ -1,18 +1,18 @@
-import { Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Categories from './pages/CategoriesPg';
+import { Routes, Route } from 'react-router-dom';
+import Books from './components/pages/Books';
 import Navigation from './components/Navigation';
+import Categories from './components/pages/Categories';
+import './App.css';
 
 function App() {
   return (
-    <>
+    <div className="App">
       <Navigation />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/categories" element={<Categories />} />
+        <Route path="/" element={<Books />} />
+        <Route path="Categories" element={<Categories />} />
       </Routes>
-    </>
-
+    </div>
   );
 }
 
