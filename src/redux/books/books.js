@@ -1,54 +1,44 @@
-import { v4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const ADD = 'bookstore/books/ADD';
-const REMOVE = 'bookstore/books/REMOVE';
+const URL = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/4pGjQSSoy74e8PYohZSS/books/';
 
-// Actions
-const addBook = (book) => ({
-  type: ADD,
-  book,
+export const loadBooks = createAsyncThunk('bookstore/books/LOAD', async () => {
+  const res = await fetch(URL);
+  // eslint-disable-next-line
+  return await res.json();
 });
 
-const removeBook = (id) => ({
-  type: REMOVE,
-  id,
+export const createBook = createAsyncThunk('bookstore/books/CREATE', async (book) => {
+  await fetch(URL, {
+    method: 'POST',
+    body: new URLSearchParams({
+      item_id: uuidv4(),
+      author: book.author,
+      title: book.title,
+      category: book.category,
+    }),
+  });
+  const res = await fetch(URL);
+  // eslint-disable-next-line
+  return await res.json();
 });
 
-const bookReducer = (state = [
-  {
-    id: v4(),
-    title: 'The Pearl of a great price',
-    author: 'Joseph Smith',
-    category: 'Gospel',
-  },
-  {
-    id: v4(),
-    title: 'The Prince',
-    author: 'Nicolo Makiaveli',
-    category: 'philosophy',
-  },
-  {
-    id: v4(),
-    title: 'Price of my karma',
-    author: 'Patrick Mukul',
-    category: 'philosophy',
-  },
-  {
-    id: v4(),
-    title: 'Metaphore',
-    author: 'Pitagore',
-    category: 'historical',
-  },
-], action = {}) => {
+export const removeBook = createAsyncThunk('bookstore/books/REMOVE', async (bookId) => {
+  await fetch(`${URL}/${bookId}`, {
+    method: 'DELETE',
+  });
+  const res = await fetch(URL);
+  // eslint-disable-next-line
+  return await res.json();
+});
+
+export default function reducer(state = {}, action) {
   switch (action.type) {
-    case ADD:
-      return [...state, action.book];
-    case REMOVE:
-      return [...state.filter((book) => book.id !== action.id)];
-    default:
-      return state;
+    case loadBooks.fulfilled.type:
+    case createBook.fulfilled.type:
+    case removeBook.fulfilled.type:
+      return action.payload;
+    default: return state;
   }
-};
-
-export { addBook, removeBook };
-export default bookReducer;
+}
