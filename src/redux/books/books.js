@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_BASE_URL = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/SKV9yPhHVa5Un0Zh5Bl5/';
+const API_BASE_URL = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/4pGjQSSoy74e8PYohZSS/books/';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
