@@ -4,8 +4,8 @@ const FETCHED_BOOK = 'bookstore/books/FETCHED_BOOK';
 const ADDED_BOOK = 'bookstore/books/ADDED_BOOK';
 const REMOVED_BOOK = 'bookstore/books/REMOVED_BOOK';
 
-const baseUrl = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps';
-const appId = 'coi5KbwSmZBfENXVGL0y';
+const baseUrl = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/books/';
+const appId = '4pGjQSSoy74e8PYohZSS';
 const appResourceUrl = `${baseUrl}/${appId}/books`;
 
 const initialState = [];
